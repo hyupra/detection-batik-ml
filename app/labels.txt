@@ -1,0 +1,11 @@
+Motif_Gajah_Lampung
+Motif_Gamolan
+Motif_Kapal
+Motif_Pohon_Hayat
+Motif_Pramadya
+Motif_Sembagi
+Motif_Siger
+
+with open("labels.txt", "w") as f:
+    for label in labels:
+        f.write(f"{label}\n")

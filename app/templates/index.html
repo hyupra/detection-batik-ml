@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deteksi Motif Batik - AI Pattern Recognition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              batik: {
+                primary: "#8B4513",
+                secondary: "#D2691E",
+                accent: "#CD853F",
+                gold: "#FFD700",
+                cream: "#F5F5DC",
+              },
+            },
+            fontFamily: {
+              indonesian: ["Georgia", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .batik-pattern {
+        background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23CD853F' fill-opacity='0.05'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v-40c11.046 0 20 8.954 20 20zM0 20c0-11.046 8.954-20 20-20v40c-11.046 0-20-8.954-20-20z'/%3E%3C/g%3E%3C/svg%3E");
+      }
+
+      .camera-glow {
+        box-shadow: 0 0 30px rgba(205, 133, 63, 0.3);
+      }
+
+      .title-glow {
+        text-shadow: 2px 2px 4px rgba(139, 69, 19, 0.3);
+      }
+
+      @keyframes pulse-border {
+        0%,
+        100% {
+          border-color: #cd853f;
+        }
+        50% {
+          border-color: #ffd700;
+        }
+      }
+
+      .pulse-border {
+        animation: pulse-border 2s infinite;
+      }
+    </style>
+  </head>
+  <body
+    class="min-h-screen bg-gradient-to-br from-batik-cream via-orange-50 to-batik-cream batik-pattern"
+  >
+    <!-- Header Section -->
+    <header
+      class="bg-gradient-to-r from-batik-primary to-batik-secondary shadow-lg"
+    >
+      <div class="container mx-auto px-4 py-6">
+        <div class="text-center">
+          <h1
+            class="text-4xl md:text-5xl font-bold text-white title-glow font-indonesian mb-2"
+          >
+            🎨 Deteksi Motif Batik
+          </h1>
+          <p class="text-batik-cream text-lg md:text-xl font-medium">
+            Teknologi AI untuk Mengenali Pola Batik Nusantara
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+      <!-- Info Cards -->
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
+        <div
+          class="bg-white rounded-xl shadow-md p-6 border-l-4 border-batik-accent"
+        >
+          <div class="flex items-center mb-3">
+            <span class="text-2xl mr-3">📸</span>
+            <h3 class="text-lg font-semibold text-batik-primary">
+              Live Camera
+            </h3>
+          </div>
+          <p class="text-gray-600">
+            Arahkan kamera ke motif batik untuk deteksi real-time
+          </p>
+        </div>
+
+        <div
+          class="bg-white rounded-xl shadow-md p-6 border-l-4 border-batik-secondary"
+        >
+          <div class="flex items-center mb-3">
+            <span class="text-2xl mr-3">🤖</span>
+            <h3 class="text-lg font-semibold text-batik-primary">
+              AI Recognition
+            </h3>
+          </div>
+          <p class="text-gray-600">
+            Sistem AI mengenali berbagai jenis motif batik tradisional
+          </p>
+        </div>
+
+        <div
+          class="bg-white rounded-xl shadow-md p-6 border-l-4 border-batik-gold"
+        >
+          <div class="flex items-center mb-3">
+            <span class="text-2xl mr-3">🏛️</span>
+            <h3 class="text-lg font-semibold text-batik-primary">
+              Budaya Indonesia
+            </h3>
+          </div>
+          <p class="text-gray-600">
+            Melestarikan warisan budaya batik melalui teknologi
+          </p>
+        </div>
+      </div>
+
+      <!-- Camera Section -->
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+          <div class="text-center mb-6">
+            <h2
+              class="text-2xl md:text-3xl font-bold text-batik-primary mb-3 font-indonesian"
+            >
+              📱 Live Detection Camera
+            </h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+              Posisikan batik di depan kamera untuk mendapatkan hasil deteksi
+              motif secara real-time. Sistem akan menganalisis pola dan
+              memberikan informasi tentang jenis motif batik.
+            </p>
+          </div>
+
+          <!-- Camera Container -->
+          <div class="flex justify-center">
+            <div class="relative">
+              <!-- Camera Frame -->
+              <div
+                class="border-4 border-batik-accent rounded-2xl p-4 bg-gradient-to-br from-gray-50 to-gray-100 pulse-border"
+              >
+                <img
+                  src="{{ url_for('video_feed') }}"
+                  width="640"
+                  height="480"
+                  alt="Stream kamera tidak tersedia"
+                  class="rounded-xl camera-glow max-w-full h-auto"
+                  style="max-width: 640px; width: 100%; height: auto"
+                />
+              </div>
+
+              <!-- Camera Status Indicator -->
+              <div
+                class="absolute top-2 right-2 bg-green-500 text-white px-3 py-1 rounded-full text-sm flex items-center"
+              >
+                <div
+                  class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"
+                ></div>
+                LIVE
+              </div>
+
+              <!-- Corner Decorations -->
+              <div
+                class="absolute -top-2 -left-2 w-6 h-6 border-l-4 border-t-4 border-batik-gold rounded-tl-lg"
+              ></div>
+              <div
+                class="absolute -top-2 -right-2 w-6 h-6 border-r-4 border-t-4 border-batik-gold rounded-tr-lg"
+              ></div>
+              <div
+                class="absolute -bottom-2 -left-2 w-6 h-6 border-l-4 border-b-4 border-batik-gold rounded-bl-lg"
+              ></div>
+              <div
+                class="absolute -bottom-2 -right-2 w-6 h-6 border-r-4 border-b-4 border-batik-gold rounded-br-lg"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Instructions -->
+          <div class="mt-8 bg-batik-cream rounded-xl p-6">
+            <h3
+              class="text-lg font-semibold text-batik-primary mb-4 flex items-center"
+            >
+              <span class="text-xl mr-2">💡</span>
+              Tips Penggunaan
+            </h3>
+            <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-700">
+              <div class="flex items-start">
+                <span class="text-batik-accent mr-2">•</span>
+                <span>Pastikan pencahayaan cukup terang</span>
+              </div>
+              <div class="flex items-start">
+                <span class="text-batik-accent mr-2">•</span>
+                <span>Jaga jarak optimal 20-30 cm dari kamera</span>
+              </div>
+              <div class="flex items-start">
+                <span class="text-batik-accent mr-2">•</span>
+                <span>Letakkan batik pada permukaan datar</span>
+              </div>
+              <div class="flex items-start">
+                <span class="text-batik-accent mr-2">•</span>
+                <span>Hindari gerakan terlalu cepat</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Info Section -->
+      <div class="mt-12 grid md:grid-cols-2 gap-8">
+        <div
+          class="bg-gradient-to-r from-batik-primary to-batik-secondary rounded-xl p-6 text-white"
+        >
+          <h3 class="text-xl font-bold mb-4 flex items-center">
+            <span class="text-2xl mr-3">🎯</span>
+            Jenis Motif yang Dapat Dideteksi
+          </h3>
+          <ul class="space-y-2 text-batik-cream">
+            <li class="flex items-center">
+              <span class="mr-2">✓</span> Motif Parang
+            </li>
+            <li class="flex items-center">
+              <span class="mr-2">✓</span> Motif Kawung
+            </li>
+            <li class="flex items-center">
+              <span class="mr-2">✓</span> Motif Sido Mukti
+            </li>
+            <li class="flex items-center">
+              <span class="mr-2">✓</span> Motif Truntum
+            </li>
+            <li class="flex items-center">
+              <span class="mr-2">✓</span> Dan motif lainnya...
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h3
+            class="text-xl font-bold text-batik-primary mb-4 flex items-center"
+          >
+            <span class="text-2xl mr-3">📊</span>
+            Akurasi Sistem
+          </h3>
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="text-sm text-gray-600">Deteksi Motif</span>
+                <span class="text-sm font-medium text-batik-primary">94%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  class="bg-gradient-to-r from-batik-accent to-batik-gold h-2 rounded-full"
+                  style="width: 94%"
+                ></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="text-sm text-gray-600">Kecepatan Proses</span>
+                <span class="text-sm font-medium text-batik-primary">98%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  class="bg-gradient-to-r from-batik-secondary to-batik-accent h-2 rounded-full"
+                  style="width: 98%"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 bg-batik-primary text-white py-8">
+      <div class="container mx-auto px-4 text-center">
+        <p class="text-batik-cream">© 2025 Yogi Syaputra</p>
+      </div>
+    </footer>
+  </body>
+</html>
