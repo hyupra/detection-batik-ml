@@ -144,12 +144,9 @@ history_ft = model.fit(
     initial_epoch=history.epoch[-1], 
     callbacks=callbacks_ft
 )
-
-# ======= Gabungkan Riwayat Pelatihan (untuk plot) =======
 for metric in history.history.keys():
     history.history[metric].extend(history_ft.history[metric])
-    
-# Ganti model.save yang lama
+
 model.save("mobilenetv2_batik_final.keras") 
 print("Final Fine-Tuned Model Saved as mobilenetv2_batik_final.keras")
 
