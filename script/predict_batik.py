@@ -8,7 +8,7 @@ import os
 model = load_model("script/batik_cnn_model.h5")
 
 # Daftar label (disesuaikan dengan datasetmu)
-class_names = ['Motif_Gajah_Lampung', 'Motif_Gamolan', 'Motif_Kapal', 'Motif_Pohon_Hayat', 'Motif_Pramadya', 'Motif_Sembagi'
+class_names = ['Motif_Gajah_Lampung', 'Motif_Gamolan', 'Motif_Kapal', 'Motif_Pohon_Hayat', 'Motif_Pramadya', 'Motif_Sembagi',
                'Motif_Siger']  # <- sesuaikan dengan label asli
 ''
 def predict_batik(img_path):
