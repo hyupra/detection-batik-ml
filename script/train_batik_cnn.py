@@ -108,17 +108,19 @@ print("====================================")
 # 1. Unfreeze base model
 base_model.trainable = True
 
+# ...
 # 2. Bekukan kembali sebagian besar layer terbawah 
-# Hanya unfreeze 40 layer terakhir MobileNetV2
-for layer in base_model.layers[:-40]: 
+# Coba hanya unfreeze 15-20 layer terakhir
+for layer in base_model.layers[:-20]: # Kurangi dari 40 ke 20
     layer.trainable = False
-
-# 3. Re-compile model dengan learning rate sangat kecil (wajib)
+# ...
+# 3. Re-compile model dengan learning rate sangat kecil
 model.compile(
-    optimizer=Adam(learning_rate=0.00001), # Learning rate sangat kecil
+    optimizer=Adam(learning_rate=0.000002), # Turunkan lagi!
     loss='categorical_crossentropy',
     metrics=['accuracy']
 )
+# ...
 
 print(f"Number of trainable weights for fine-tuning: {len(model.trainable_weights)}")
 
