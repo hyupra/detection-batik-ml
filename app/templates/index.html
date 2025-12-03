@@ -210,6 +210,40 @@
         </div>
       </div>
 
+      <!-- === TAMBAHAN: UPLOAD & DESKRIPSI === -->
+      <div class="max-w-4xl mx-auto mt-12">
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+          <h2 class="text-2xl md:text-3xl font-bold text-batik-primary mb-4 font-indonesian text-center">
+            🖼️ Upload Gambar Batik
+          </h2>
+          <p class="text-gray-600 text-center mb-6">
+            Unggah gambar batik dari perangkat Anda untuk deteksi motif.
+          </p>
+
+          <div class="flex flex-col items-center">
+            <input
+              type="file"
+              id="imageUpload"
+              accept="image/jpeg, image/png"
+              class="mb-4 w-full max-w-xs text-gray-700"
+            />
+            <button
+              id="uploadBtn"
+              class="bg-batik-secondary hover:bg-batik-accent text-white font-bold py-2 px-6 rounded-full transition"
+            >
+              Analisis Gambar
+            </button>
+          </div>
+
+          <div id="result" class="mt-8 hidden text-center">
+            <img id="uploadedImage" class="mx-auto rounded-lg shadow-md max-w-xs mb-4 border-2 border-batik-accent" />
+            <h3 id="resultLabel" class="text-xl font-bold text-batik-primary"></h3>
+            <p id="resultDesc" class="text-gray-700 mt-2 px-4"></p>
+          </div>
+        </div>
+      </div>
+      <!-- === AKHIR TAMBAHAN === -->
+
       <!-- Additional Info Section -->
       <div class="mt-12 grid md:grid-cols-2 gap-8">
         <div
@@ -281,5 +315,43 @@
         <p class="text-batik-cream">© 2025 Yogi Syaputra</p>
       </div>
     </footer>
+
+    <!-- JavaScript untuk Upload -->
+    <script>
+      document.getElementById('uploadBtn').addEventListener('click', async () => {
+        const input = document.getElementById('imageUpload');
+        const file = input.files[0];
+        if (!file) {
+          alert('Silakan pilih file gambar terlebih dahulu.');
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+          const response = await fetch('/predict', {
+            method: 'POST',
+            body: formData,
+          });
+
+          const data = await response.json();
+          if (data.error) {
+            alert('Error: ' + data.error);
+            return;
+          }
+
+          const imageUrl = URL.createObjectURL(file);
+          document.getElementById('uploadedImage').src = imageUrl;
+          document.getElementById('resultLabel').textContent = data.label;
+          document.getElementById('resultDesc').textContent = data.description;
+          document.getElementById('result').classList.remove('hidden');
+        } catch (err) {
+          console.error(err);
+          alert('Terjadi kesalahan saat memproses gambar.');
+        }
+      });
+    </script>
   </body>
 </html>
+
